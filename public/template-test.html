@@ -10,34 +10,63 @@
 		     font-weight: bold;
 		 }
 	</style>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
 </head>
 <body ng-app="templateTest">
+	<div class="container">
+		<header>
+			<h1> {{ "class exercises" | uppercase }} </h1>
+		</header>
+		    <ul>
+		    	<h2>Using ng-if</h2>
+		        <li ng-repeat="num in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-if="num % 3 !== 0">
+		            {{ num }}
+		        </li>
+		    </ul>
+		    <ul>
+		    	<h2>Using ng-show</h2>
+		        <li ng-repeat="num in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-show="num % 3 !== 0">
+		            {{ num }}
+		        </li>
+		    </ul>
 
-<h2> {{ "class exercises" | uppercase }} </h2>
-    <ul>
-        <li ng-repeat="num in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-if="num % 3 !== 0">
-            {{ num }}
-        </li>
-    </ul>
+		    <ul>
+		    	<h2>Using ng-hide</h2>
+		        <li ng-repeat="num in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-hide="num % 3 !== 0">
+		            {{ num }}
+		        </li>
+		    </ul>
 
-    <ul>
-    	<li ng-repeat="letter in ['A', 'B', 'C', 'D', 'E', 'F']">
-    		{{ letter | uppercase }}
-    	</li>
-    </ul>
+		    <ul>
+		    	<h2>Using ng-repeat</h2>
+		    	<li ng-repeat="letter in ['A', 'B', 'C', 'D', 'E', 'F']">
+		    		{{ letter | uppercase }}
+		    	</li>
+		    </ul>
 
-    <ul>
-    	<li ng-repeat="letter in ['A', 'B', 'C', 'D', 'E', 'F']">
-    		{{ letter | lowercase }}
-    	</li>
-    </ul>
+		    <ul>
+		    	<h2>Using ng-repeat</h2>
+		    	<li ng-repeat="letter in ['A', 'B', 'C', 'D', 'E', 'F']">
+		    		{{ letter | lowercase }}
+		    	</li>
+		    </ul>
 
-	<img ng-src="{{ '/img/cat-1.jpg' }}" alt="Cat gifs are always funny" width="500px" height="373px">
-	<img ng-src="/img/{{ 'cat-2.jpg' }}" alt="Cat gifs are always funny" width="460px" height="565px">
-	<img ng-src="/img/{{ 'cat-3' }}.jpg" alt="Cat gifs are always funny" width="498px" height="347px">	
+		    <div>
+		    	<img ng-repeat="picture in ['cat-1.jpg', 'cat-2.jpg', 'cat-3.jpg']" ng-src="/img/{{ picture }}">
+		    </div>
 
+			<img ng-src="{{ '/img/cat-1.jpg' }}" alt="Cat gifs are always funny" width="500px" height="373px">
+			<img ng-src="/img/{{ 'cat-2.jpg' }}" alt="Cat gifs are always funny" width="460px" height="565px">
+			<img ng-src="/img/{{ 'cat-3' }}.jpg" alt="Cat gifs are always funny" width="498px" height="347px">	
+	</div>
 
-<script type="text/javascript" src="/js/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="/js/templateTest.js"></script>
 
 </body>
