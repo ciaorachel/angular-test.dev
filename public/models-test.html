@@ -34,98 +34,86 @@
 </head>
 
 <body ng-app="modelsTest">
-	<div class="container">
+	<div class="container" ng-controller="UsersController as uCtrl">
 		<h1>Angular Models Testing</h1>
-
 		
+		<div class="col-sm-6 pull-left">
+			<form name="userForm" ng-submit="uCtrl.addUser()" novalidate>
+				<div class="form-group" ng-class="{ 'has-error' : userForm.first_name.$invalid && userForm.first_name.$touched, 'has-success' : userForm.first_name.$valid && userForm.first_name.$touched }">
+					<label for="first_name">First name</label>
+					<input class="form-control" type="text" id="first_name" name="first_name" ng-model="uCtrl.newUser.firstName" maxlength="50" required>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : userForm.last_name.$invalid && userForm.last_name.$touched, 'has-success' : userForm.last_name.$valid && userForm.last_name.$touched }">
+					<label for="last_name">Last name</label>
+					<input class="form-control" type="text" id="last_name" name="last_name" ng-model="uCtrl.newUser.lastName" maxlength="100" required>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && userForm.email.$touched, 'has-success' : userForm.email.$valid && userForm.email.$touched }">
+					<label for"email">Email</label>
+					<input class="form-control" type="email" id="email" ng-model="uCtrl.newUser.email" required>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && userForm.password.$touched, 'has-success' : userForm.password.$valid && userForm.password.$touched }">
+					<label for="password">Password</label>
+				    <input class="form-control" type="password" id="password" ng-model="uCtrl.newUser.password" minlength="6" required>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : userForm.date_of_birth.$invalid && userForm.date_of_birth.$touched, 'has-success' : userForm.date_of_birth.$valid && userForm.date_of_birth.$touched }">
+					<label for="date_of_birth">Date of Birth</label>
+				    <input class="form-control" type="date" id="date_of_birth" ng-model="uCtrl.newUser.date_of_birth" required>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : userForm.git_hub.$invalid && userForm.git_hub.$touched, 'has-success' : userForm.git_hub.$valid && userForm.git_hub.$touched }">
+					<label for="git_hub">GitHub page</label>
+				    <input class="form-control" type="text" id="git_hub" ng-model="uCtrl.newUser.git_hub" required>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : userForm.select_icon.$invalid && userForm.select_icon.$touched, 'has-success' : userForm.select_icon.$valid && userForm.select_icon.$touched }">
+					<label for="select_icon"> Select icon:</label>
+					<select class="form-control" name="select_icon" ng-model="uCtrl.newUser.select_icon" required>
+						<option ng-repeat="option in ['option-1.png']" value="{{ option }}">Option 1</option>
+						<option ng-repeat="option in ['option-2.png']" value="{{ option }}">Option 2</option>
+						<option ng-repeat="option in ['option-3.png']" value="{{ option }}">Option 3</option>
+				    </select>
+				</div>
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-success">Add User</button>
+				</div>
+			</form>
+		</div>
+
+
+
 		<div class="col-sm-6 pull-right">
 			<div class="well" ng-if="userForm.$valid">
 				<div id="headLiner">
-					<h2>Hi there!</h2>
+					<h2>hi there!</h2>
 				</div>
 
 				<ul class="media-list">
 					<li class="media">
 						<div class="media-left">
-							<img class="media-object" ng-src="/img/{{ user.select_icon }}">
+							<img class="media-object" ng-src="/img/{{ uCtrl.newUser.select_icon }}">
 						</div>
 						<div class="media-body">
-							<h2 class="media-heading">{{ user.firstName | lowercase }} {{ user.lastName | lowercase }}</h2>
-							<p><em>email:</em> {{ user.email }}</p>
-							<p><em>birthday:</em> {{ user.date_of_birth | date: "MMM d" }}</p>
-							<p><em>gitHub profile:</em> <a ng-href="http://github.com/{{ user.git_hub }}" target="blank">github.com/{{ user.git_hub }}</a></p>
+							<h2 class="media-heading">{{ uCtrl.newUser.firstName }} {{ uCtrl.newUser.lastName }}</h2>
+							<p><em>email:</em> {{ uCtrl.newUser.email }}</p>
+							<p><em>birthdate:</em> {{ uCtrl.newUser.date_of_birth | date: "MMM d" }}</p>
+							<p><em>github profile:</em> <a ng-href="http://github.com/{{ uCtrl.newUser.git_hub }}" target="blank">github.com/{{ uCtrl.newUser.git_hub }}</a></p>
 						</div>
 					</li>
 				</ul>
 			</div>
 
-			
+			<div>
+				<ul>
+					<li ng-repeat="user in uCtrl.users"> {{ user.firstName }} {{ user.lastName }} </li>
+				</ul>
+			</div>
 		</div>
 
-		
-		<div class="col-sm-6 pull-left">
-			<form name="userForm" novalidate>
-				<div class="form-group" ng-class="{'has-error' : userForm.first_name.$invalid && !userForm.first_name.$pristine }">
-					<label for="first_name">First name</label>
-					<input class="form-control" type="text" id="first_name" name="first_name" ng-model="user.firstName" maxlength="50" >
-				</div>
-
-				<div class="form-group" ng-class="{'has-error' : userForm.last_name.$invalid && !userForm.last_name.$pristine }">
-					<label for="last_name">Last name</label>
-					<input class="form-control" type="text" id="last_name" name="last_name" ng-model="user.lastName" maxlength="100" >
-				</div>
-
-				<div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-					<label for"email">Email</label>
-					<input class="form-control" type="email" id="email" ng-model="user.email" >
-				</div>
-
-				<div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
-					<label for="password">Password</label>
-				    <input class="form-control" type="password" id="password" ng-model="user.password" minlength="6" >
-				</div>
-
-				<div class="form-group" ng-class="{ 'has-error' : userForm.date_of_birth.$invalid && !userForm.date_of_birth.$pristine }">
-					<label for="date_of_birth">Date of Birth</label>
-				    <input class="form-control" type="date" id="date_of_birth" ng-model="user.date_of_birth" >
-				</div>
-
-				<div class="form-group" ng-class="{ 'has-error' : userForm.git_hub.$invalid && !userForm.git_hub.$pristine }">
-					<label for="git_hub">GitHub page</label>
-				    <input class="form-control" type="text" id="git_hub" ng-model="user.git_hub" >
-				</div>
-
-				<div class="form-group" ng-class="{ 'has-error' : userForm.select_icon.$invalid && !userForm.select_icon.$pristine }">
-					<label for="select_icon"> Select icon:</label>
-					<select class="form-control" name="select_icon" ng-model="user.select_icon" >
-						<option ng-repeat="option in ['option-1.png']" value="{{ option }}">Option 1</option>
-						<option ng-repeat="option in ['option-2.png']" value="{{ option }}">Option 2</option>
-						<option ng-repeat="option in ['option-3.png']" value="{{ option }}">Option 3</option>
-				    </select>
-
-				</div>
-
-				<!-- 
-				<select name="repeatSelect" ng-model="data.repeatSelect">
-			      <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-			    </select>
-
-				<div class="dropdown" ng-class="{ 'has-error' : userForm.select_icon.$invalid && !userForm.select_icon.$pristine }">
-					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					Select an icon
-					<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="icon in ['icon-1.png']" ng-click="setValue(icon)"><img ng-src="/img/{{ icon }}" ng-model="user.select_icon"></li>
-
-						<li><img ng-src="/img/{{ 'icon-1' }}.png" height="100px" width="100px" ng-model="user.select_icon"></li>
-						<li><img ng-src="/img/{{ 'icon-2' }}.png" height="100px" width="100px" ng-model="user.select_icon"></li>
-						<li><img ng-src="/img/{{ 'icon-3' }}.png" height="100px" width="100px" ng-model="user.select_icon"></li>
-					</ul>
-				</div> -->
-
-			</form>
-		</div>
 	</div>
 
 
